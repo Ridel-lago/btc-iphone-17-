@@ -51,7 +51,12 @@ function RSI(v,p=14){if(v.length<=p)return null;let g=0,l=0;for(let i=1;i<=p;i++
 function cents(m,key){const d=m[key+"_dollars"];if(d!==undefined&&d!==null&&d!=="")return +d*100;const v=m[key];return Number.isFinite(+v)?+v:null}
 function kalshiOdds(m){let ya=cents(m,"yes_ask"),yb=cents(m,"yes_bid");if(ya===null&&yb===null){const lp=cents(m,"last_price");return lp===null?50:lp}if(ya===null)return yb;if(yb===null)return ya;return (ya+yb)/2}
 async function getKalshi(){
- const d=await json(K+"/markets?series_ticker=KXBTC15M&status=open&limit=100");
+ const url=K+"/markets?series_ticker=KXBTC15M&status=open&limit=100";
+ let d,errors=[];
+ for(const u of [url,"https://api.allorigins.win/raw?url="+encodeURIComponent(url),"https://corsproxy.io/?url="+encodeURIComponent(url)]){
+  try{d=await json(u,10000);if(d?.markets?.length)break}catch(e){errors.push(e.message)}
+ }
+ if(!d?.markets?.length)throw Error("Kalshi bloqueó la conexión: "+errors.join(" / "));
  const now=Date.now(),list=(d.markets||[]).filter(m=>new Date(m.close_time).getTime()>now).sort((a,b)=>new Date(a.close_time)-new Date(b.close_time));
  if(!list.length)throw Error("Kalshi no devolvió un mercado BTC 15 min abierto");return list[0]
 }
