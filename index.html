@@ -5,153 +5,83 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#07111f">
-<title>BTC Predictivo V4</title>
+<title>BTC Kalshi 15 Min</title>
 <style>
-:root{color-scheme:dark}*{box-sizing:border-box}
-body{margin:0;background:#07111f;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:16px 14px 28px}
-.wrap{max-width:650px;margin:auto}.card{background:#111d31;border:1px solid #293a59;border-radius:24px;padding:18px;margin-bottom:12px}
-h1{margin:0;font-size:27px}.muted{color:#9baac2}.status{display:inline-flex;align-items:center;gap:8px;margin-top:10px;font-weight:800}
-.dot{width:10px;height:10px;border-radius:50%;background:#f5bd42}.online .dot{background:#3bd99a}.error .dot{background:#ff667b}
-.price{font-size:42px;font-weight:900;margin:14px 0 2px}.signal{font-size:40px;font-weight:950;margin:8px 0}.up{color:#3fe09a}.down{color:#ff667b}.wait{color:#ffd25c}
-.probs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.box{background:#1a2842;border-radius:18px;padding:14px}.box b{display:block;font-size:28px;margin-top:4px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.metric{background:#0b1526;border-radius:16px;padding:12px}.metric b{display:block;margin-top:5px;font-size:18px}
-.reason{margin-top:12px;padding:13px;background:#0c1728;border-radius:16px;line-height:1.45}
-.source{margin-top:10px;font-size:13px;font-weight:800}
-button{width:100%;border:0;border-radius:16px;padding:15px;margin-top:10px;font-size:16px;font-weight:850;background:#fff;color:#07111f}button.alt{background:#1b2b48;color:#fff}
-.note{font-size:12px;line-height:1.45;color:#91a0b7;margin-top:14px}
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#07111f;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:16px 14px 28px}.wrap{max-width:650px;margin:auto}.card{background:#111d31;border:1px solid #293a59;border-radius:24px;padding:18px;margin-bottom:12px}h1{margin:0;font-size:27px}.muted{color:#9baac2}.status{display:inline-flex;align-items:center;gap:8px;margin-top:10px;font-weight:800}.dot{width:10px;height:10px;border-radius:50%;background:#f5bd42}.online .dot{background:#3bd99a}.error .dot{background:#ff667b}.headline{display:flex;justify-content:space-between;gap:12px;align-items:flex-end;margin-top:14px}.target,.current{font-size:27px;font-weight:900}.current.up{color:#3fe09a}.current.down{color:#ff667b}.signal{font-size:42px;font-weight:950;margin:8px 0}.up{color:#3fe09a}.down{color:#ff667b}.wait{color:#ffd25c}.probs,.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.box{background:#1a2842;border-radius:18px;padding:14px}.box b{display:block;font-size:28px;margin-top:4px}.metric{background:#0b1526;border-radius:16px;padding:12px}.metric b{display:block;margin-top:5px;font-size:18px}.reason{margin-top:12px;padding:13px;background:#0c1728;border-radius:16px;line-height:1.45}.source{margin-top:10px;font-size:13px;font-weight:800}button{width:100%;border:0;border-radius:16px;padding:15px;margin-top:10px;font-size:16px;font-weight:850;background:#fff;color:#07111f}button.alt{background:#1b2b48;color:#fff}.note{font-size:12px;line-height:1.45;color:#91a0b7;margin-top:14px}
 </style>
 </head>
 <body><div class="wrap">
 <div class="card">
-<h1>₿ BTC Predictivo V4</h1>
-<div class="muted">Análisis previo de los próximos ~2 minutos</div>
-<div id="status" class="status"><span class="dot"></span><span id="statusText">Buscando datos…</span></div>
-<div id="price" class="price">—</div>
+<h1>₿ BTC · Kalshi 15 min</h1>
+<div class="muted">Mercado oficial KXBTC15M · patrones de 1 minuto</div>
+<div id="status" class="status"><span class="dot"></span><span id="statusText">Conectando con Kalshi…</span></div>
+<div class="headline"><div><span class="muted">OBJETIVO KALSHI</span><div id="target" class="target">—</div></div><div><span class="muted">BTC ACTUAL</span><div id="price" class="current">—</div></div></div>
+<div id="distance" class="muted">Distancia al objetivo: —</div>
+<div id="timer" class="target wait">Tiempo restante: —</div>
 <div id="updated" class="muted">Esperando datos…</div>
-<div id="source" class="source muted">Fuente: buscando…</div>
+<div id="source" class="source muted">Fuentes: Kalshi + Coinbase</div>
 </div>
-
 <div class="card">
-<div class="muted">PRÓXIMOS ~2 MINUTOS</div>
+<div class="muted">PROBABILIDAD DE TERMINAR SOBRE/BAJO EL OBJETIVO</div>
 <div id="signal" class="signal wait">ESPERAR</div>
-<div id="confidence" class="muted">Calculando señal…</div>
-<div class="probs">
-<div class="box"><span class="muted">Estimación SUBE</span><b id="pup" class="up">50%</b></div>
-<div class="box"><span class="muted">Estimación BAJA</span><b id="pdown" class="down">50%</b></div>
-</div>
-
+<div id="confidence" class="muted">Calculando…</div>
+<div class="probs"><div class="box"><span class="muted">UP · Kalshi</span><b id="pup" class="up">—</b></div><div class="box"><span class="muted">DOWN · Kalshi</span><b id="pdown" class="down">—</b></div></div>
 <div class="grid">
-<div class="metric"><span class="muted">EMA 9</span><b id="ema9">—</b></div>
-<div class="metric"><span class="muted">EMA 21</span><b id="ema21">—</b></div>
+<div class="metric"><span class="muted">Patrón 1 min</span><b id="pattern">—</b></div>
+<div class="metric"><span class="muted">Velas 3 min</span><b id="candles">—</b></div>
+<div class="metric"><span class="muted">EMA 9 / 21</span><b id="ema">—</b></div>
 <div class="metric"><span class="muted">RSI 14</span><b id="rsi">—</b></div>
-<div class="metric"><span class="muted">Momentum 3 min</span><b id="mom3">—</b></div>
+<div class="metric"><span class="muted">Momentum 1 min</span><b id="mom1">—</b></div>
 <div class="metric"><span class="muted">Volumen</span><b id="volume">—</b></div>
-<div class="metric"><span class="muted">Volatilidad</span><b id="volatility">—</b></div>
 </div>
-
-<div id="reason" class="reason">Intentando conectar con Coinbase…</div>
-<button id="voice">🔊 Activar lectura por voz</button>
-<button id="refresh" class="alt">↻ Analizar ahora</button>
-<div class="note">SUBE/BAJA es una estimación técnica, no una garantía. Si la señal no llega al 60%, el bot muestra ESPERAR.</div>
+<div id="reason" class="reason">Buscando el mercado activo de Kalshi…</div>
+<button id="voice">🔊 Activar lectura por voz</button><button id="refresh" class="alt">↻ Analizar ahora</button>
+<div class="note">El porcentaje UP/DOWN viene del precio del contrato en Kalshi. Los patrones técnicos sirven como apoyo, no garantizan el resultado. El bot muestra ESPERAR cuando la ventaja no es clara.</div>
 </div></div>
-
 <script>
 (()=>{
-const $=id=>document.getElementById(id);
-let busy=false,voiceOn=false,lastResult=null;
-function setStatus(t,m=""){ $("statusText").textContent=t; $("status").className="status "+m; }
-function money(n){return new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:2}).format(n)}
-function clamp(x,a,b){return Math.max(a,Math.min(b,x))}
-function sigmoid(x){return 1/(1+Math.exp(-x))}
-function pct(x){return (x>=0?"+":"")+x.toFixed(3)+"%"}
+const $=id=>document.getElementById(id),K="https://external-api.kalshi.com/trade-api/v2";
+let busy=false,voiceOn=false,lastResult=null,activeMarket=null,timerId=null;
+const money=n=>new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:2}).format(n);
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+function setStatus(t,m=""){$("statusText").textContent=t;$("status").className="status "+m}
+async function json(url,timeout=9000){const c=new AbortController(),tm=setTimeout(()=>c.abort(),timeout);try{const r=await fetch(url,{cache:"no-store",signal:c.signal});if(!r.ok)throw Error("HTTP "+r.status);return await r.json()}finally{clearTimeout(tm)}}
 function EMA(v,p){if(v.length<p)return null;let k=2/(p+1),e=v.slice(0,p).reduce((a,b)=>a+b,0)/p;for(let i=p;i<v.length;i++)e=v[i]*k+e*(1-k);return e}
-function RSI(v,p=14){if(v.length<=p)return null;let g=0,l=0;for(let i=1;i<=p;i++){let d=v[i]-v[i-1];if(d>0)g+=d;else l-=d}let ag=g/p,al=l/p;for(let i=p+1;i<v.length;i++){let d=v[i]-v[i-1];ag=(ag*(p-1)+Math.max(d,0))/p;al=(al*(p-1)+Math.max(-d,0))/p}if(al===0)return 100;return 100-100/(1+ag/al)}
-function stdev(a){if(a.length<2)return 0;let m=a.reduce((x,y)=>x+y,0)/a.length;return Math.sqrt(a.reduce((s,x)=>s+(x-m)**2,0)/(a.length-1))}
-async function getJSON(url,timeout=7000){
- const c=new AbortController(),tm=setTimeout(()=>c.abort(),timeout);
- try{const r=await fetch(url,{cache:"no-store",signal:c.signal});if(!r.ok)throw new Error("HTTP "+r.status);return await r.json()}finally{clearTimeout(tm)}
+function RSI(v,p=14){if(v.length<=p)return null;let g=0,l=0;for(let i=1;i<=p;i++){let d=v[i]-v[i-1];if(d>0)g+=d;else l-=d}let ag=g/p,al=l/p;for(let i=p+1;i<v.length;i++){let d=v[i]-v[i-1];ag=(ag*(p-1)+Math.max(d,0))/p;al=(al*(p-1)+Math.max(-d,0))/p}return al===0?100:100-100/(1+ag/al)}
+function cents(m,key){const d=m[key+"_dollars"];if(d!==undefined&&d!==null&&d!=="")return +d*100;const v=m[key];return Number.isFinite(+v)?+v:null}
+function kalshiOdds(m){let ya=cents(m,"yes_ask"),yb=cents(m,"yes_bid");if(ya===null&&yb===null){const lp=cents(m,"last_price");return lp===null?50:lp}if(ya===null)return yb;if(yb===null)return ya;return (ya+yb)/2}
+async function getKalshi(){
+ const d=await json(K+"/markets?series_ticker=KXBTC15M&status=open&limit=100");
+ const now=Date.now(),list=(d.markets||[]).filter(m=>new Date(m.close_time).getTime()>now).sort((a,b)=>new Date(a.close_time)-new Date(b.close_time));
+ if(!list.length)throw Error("Kalshi no devolvió un mercado BTC 15 min abierto");return list[0]
 }
-
-async function coinbase(){
- $("reason").textContent="Probando Coinbase…";
- const data=await getJSON("https://api.exchange.coinbase.com/products/BTC-USD/candles?granularity=60");
- if(!Array.isArray(data)||data.length<25)throw new Error("Coinbase sin velas");
- const rows=data.slice(0,70).map(r=>({t:+r[0],low:+r[1],high:+r[2],open:+r[3],close:+r[4],vol:+r[5]})).sort((a,b)=>a.t-b.t);
- return {rows,source:"Coinbase"};
-}
-async function binance(){
- $("reason").textContent="Coinbase no respondió. Probando Binance…";
- const data=await getJSON("https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1m&limit=70");
- if(!Array.isArray(data)||data.length<25)throw new Error("Binance sin velas");
- const rows=data.map(r=>({t:+r[0]/1000,open:+r[1],high:+r[2],low:+r[3],close:+r[4],vol:+r[5]}));
- return {rows,source:"Binance"};
-}
-async function kraken(){
- $("reason").textContent="Probando tercera fuente: Kraken…";
- const data=await getJSON("https://api.kraken.com/0/public/OHLC?pair=XBTUSD&interval=1");
- if(data.error?.length)throw new Error("Kraken error");
- const arr=Object.entries(data.result||{}).find(([k,v])=>Array.isArray(v))?.[1];
- if(!arr||arr.length<25)throw new Error("Kraken sin velas");
- const rows=arr.slice(-70).map(r=>({t:+r[0],open:+r[1],high:+r[2],low:+r[3],close:+r[4],vol:+r[6]}));
- return {rows,source:"Kraken"};
-}
-async function market(){
- const errors=[];
- for(const fn of [coinbase,binance,kraken]){
-   try{return await fn()}catch(e){errors.push(e.message)}
- }
- throw new Error(errors.join(" | "));
-}
-
+async function getCoinbase(){const d=await json("https://api.exchange.coinbase.com/products/BTC-USD/candles?granularity=60");if(!Array.isArray(d)||d.length<25)throw Error("Coinbase sin velas");return d.slice(0,70).map(r=>({t:+r[0],low:+r[1],high:+r[2],open:+r[3],close:+r[4],vol:+r[5]})).sort((a,b)=>a.t-b.t)}
+function updateTimer(){if(!activeMarket)return;const s=Math.max(0,Math.ceil((new Date(activeMarket.close_time)-Date.now())/1000)),mm=Math.floor(s/60),ss=String(s%60).padStart(2,"0");$("timer").textContent=`Tiempo restante: ${mm}:${ss}`;if(s===0&&!busy)setTimeout(analyze,1200)}
+function candlePattern(rows){const a=rows.at(-1),b=rows.at(-2),body=Math.abs(a.close-a.open),range=Math.max(.01,a.high-a.low);if(a.close>b.high)return"Ruptura alcista";if(a.close<b.low)return"Ruptura bajista";if(body/range<.18)return"Indecisión";if(a.close>a.open&&b.close<b.open&&a.close>=b.open&&a.open<=b.close)return"Envolvente alcista";if(a.close<a.open&&b.close>b.open&&a.open>=b.close&&a.close<=b.open)return"Envolvente bajista";return a.close>a.open?"Vela alcista":a.close<a.open?"Vela bajista":"Neutral"}
 async function analyze(){
- if(busy)return;busy=true;setStatus("Conectando…");
+ if(busy)return;busy=true;setStatus("Actualizando Kalshi…");
  try{
-  const {rows,source}=await market();
-  const closes=rows.map(r=>r.close).filter(Number.isFinite), n=closes.length, price=closes[n-1];
-  if(n<25||!Number.isFinite(price))throw new Error("Datos insuficientes");
-
-  const e9=EMA(closes,9),e21=EMA(closes,21),rsi=RSI(closes,14);
-  const mom1=(closes[n-1]-closes[n-2])/closes[n-2]*100;
-  const mom3=(closes[n-1]-closes[n-4])/closes[n-4]*100;
-  const mom5=(closes[n-1]-closes[n-6])/closes[n-6]*100;
-  const rets=[];for(let i=Math.max(1,n-11);i<n;i++)rets.push((closes[i]-closes[i-1])/closes[i-1]*100);
-  const vola=stdev(rets);
-  const vols=rows.map(r=>r.vol).filter(Number.isFinite);
-  const rv=vols.slice(-3).reduce((a,b)=>a+b,0)/3;
-  const base=vols.slice(-15,-3); const av=base.reduce((a,b)=>a+b,0)/Math.max(1,base.length);
-  const vr=av>0?rv/av:1;
-
-  const emaGap=(e9-e21)/price*100, price9=(price-e9)/price*100;
-  let rs=0;if(rsi>=52&&rsi<=68)rs=(rsi-52)/16;else if(rsi>68)rs=Math.max(-.35,1-(rsi-68)/12);else if(rsi<=48&&rsi>=32)rs=-(48-rsi)/16;else if(rsi<32)rs=Math.min(.35,-1+(32-rsi)/12);
-  let score=clamp(emaGap/.12,-2,2)*.36+clamp((mom1*.45+mom3*.4+mom5*.15)/.20,-2,2)*.36+rs*.18+clamp(price9/.10,-1.5,1.5)*.10;
-  score*=1+clamp((vr-1)*.22,-.10,.14); score*=1-clamp((vola-.18)*.8,0,.28);
-  const raw=.5+(sigmoid(score)-.5)*.80;
-  const pup=Math.round(clamp(raw,.30,.70)*100),pdown=100-pup;
-  let signal="ESPERAR",cls="wait";if(pup>=60){signal="SUBE";cls="up"}else if(pdown>=60){signal="BAJA";cls="down"}
-  const conf=Math.max(pup,pdown);
-  const ctxt=conf>=65?"Confianza técnica: ALTA":conf>=60?"Confianza técnica: MEDIA":"Confianza técnica: BAJA — ESPERAR";
-
-  $("price").textContent=money(price);$("signal").textContent=signal;$("signal").className="signal "+cls;
-  $("pup").textContent=pup+"%";$("pdown").textContent=pdown+"%";$("confidence").textContent=ctxt;
-  $("ema9").textContent=money(e9);$("ema21").textContent=money(e21);$("rsi").textContent=rsi.toFixed(1);
-  $("mom3").textContent=pct(mom3);$("volume").textContent=vr>=1.15?"Alto":vr<=.85?"Bajo":"Normal";
-  $("volatility").textContent=vola>=.25?"Alta":vola>=.12?"Media":"Baja";
-  $("source").textContent="Fuente activa: "+source;
-  const reasons=[e9>e21?"EMA alcista":"EMA bajista",mom3>.03?"momentum positivo":mom3<-.03?"momentum negativo":"momentum neutral",rsi>=52?"RSI favorece subida":rsi<=48?"RSI favorece bajada":"RSI neutral"];
-  $("reason").textContent=(signal==="ESPERAR"?"Todavía no hay suficiente ventaja. ":"Señal anticipada detectada. ")+reasons.join(" · ")+".";
-  $("updated").textContent="Actualizado: "+new Date().toLocaleTimeString("es-US");
-  setStatus("ANÁLISIS ACTIVO","online");lastResult={price,signal,pup,pdown,ctxt};
- }catch(e){
-  setStatus("Sin datos","error");$("source").textContent="Ninguna fuente respondió";
-  $("reason").textContent="No pude recibir datos desde Coinbase, Binance ni Kraken. Pulsa Analizar ahora. Si sigue así, envíame una captura de esta pantalla.";
- }finally{busy=false}
+  const [m,rows]=await Promise.all([getKalshi(),getCoinbase()]);activeMarket=m;updateTimer();
+  const closes=rows.map(x=>x.close),price=closes.at(-1),target=+m.floor_strike,e9=EMA(closes,9),e21=EMA(closes,21),rsi=RSI(closes),last=rows.at(-1);
+  if(!Number.isFinite(target))throw Error("Kalshi no envió el objetivo");
+  const dist=price-target,mom1=(closes.at(-1)-closes.at(-2))/closes.at(-2)*100;
+  const recent=rows.slice(-3),bull=recent.filter(x=>x.close>x.open).length,bear=recent.filter(x=>x.close<x.open).length;
+  const vols=rows.map(x=>x.vol),vavg=vols.slice(-16,-1).reduce((a,b)=>a+b,0)/15,vr=last.vol/vavg;
+  const pattern=candlePattern(rows),marketUp=Math.round(clamp(kalshiOdds(m),1,99)),marketDown=100-marketUp;
+  let signal="ESPERAR",cls="wait";if(marketUp>=60){signal="UP";cls="up"}else if(marketDown>=60){signal="DOWN";cls="down"}
+  const technical=(e9>e21?1:-1)+(mom1>.015?1:mom1<-.015?-1:0)+(rsi>52?1:rsi<48?-1:0);
+  const agrees=(signal==="UP"&&technical>0)||(signal==="DOWN"&&technical<0);
+  const confidence=signal==="ESPERAR"?"POCA CONFIANZA — ESPERAR":agrees?"Kalshi y patrones coinciden":"PRECAUCIÓN — Kalshi y patrones no coinciden";
+  $("target").textContent=money(target);$("price").textContent=money(price);$("price").className="current "+(dist>=0?"up":"down");
+  $("distance").textContent=`Distancia al objetivo: ${dist>=0?"+":""}${money(dist)} (${dist>=0?"arriba":"abajo"})`;
+  $("signal").textContent=signal;$("signal").className="signal "+cls;$("confidence").textContent=confidence;$("pup").textContent=marketUp+"%";$("pdown").textContent=marketDown+"%";
+  $("pattern").textContent=pattern;$("candles").textContent=bull>bear?`${bull}/3 alcistas`:bear>bull?`${bear}/3 bajistas`:"Mixtas";$("ema").textContent=e9>e21?"Alcista":"Bajista";$("rsi").textContent=rsi.toFixed(1);$("mom1").textContent=(mom1>=0?"+":"")+mom1.toFixed(3)+"%";$("volume").textContent=vr>1.2?"Alto":vr<.8?"Bajo":"Normal";
+  $("reason").textContent=`Kalshi marca ${marketUp}% UP y ${marketDown}% DOWN. BTC está ${Math.abs(dist).toFixed(2)} dólares ${dist>=0?"sobre":"bajo"} el objetivo. Patrón: ${pattern.toLowerCase()}.`;
+  $("updated").textContent="Actualizado: "+new Date().toLocaleTimeString("es-US")+" · mercado "+m.ticker;setStatus("KALSHI EN VIVO","online");lastResult={price,target,dist,signal,up:marketUp,down:marketDown};
+ }catch(e){setStatus("Sin conexión","error");$("reason").textContent="No pude leer Kalshi o los patrones de Bitcoin. Pulsa Analizar ahora. Detalle: "+e.message}finally{busy=false}
 }
-function speak(){
- if(!voiceOn||!lastResult||!("speechSynthesis"in window))return;
- const r=lastResult,u=new SpeechSynthesisUtterance(`Bitcoin ${Math.round(r.price).toLocaleString("es-US")} dólares. Próximos dos minutos: ${r.signal}. Sube ${r.pup} por ciento. Baja ${r.pdown} por ciento.`);
- u.lang="es-US";speechSynthesis.cancel();speechSynthesis.speak(u)
-}
-$("voice").onclick=()=>{voiceOn=!voiceOn;$("voice").textContent=voiceOn?"🔊 Voz activada cada 30 segundos":"🔇 Activar lectura por voz";if(voiceOn)speak()};
-$("refresh").onclick=analyze;setInterval(analyze,15000);setInterval(()=>{if(voiceOn)speak()},30000);analyze();
+function speak(){if(!voiceOn||!lastResult||!("speechSynthesis"in window))return;const r=lastResult,u=new SpeechSynthesisUtterance(`Kalshi Bitcoin quince minutos. Señal ${r.signal}. Up ${r.up} por ciento. Down ${r.down} por ciento. Bitcoin está ${Math.abs(Math.round(r.dist))} dólares ${r.dist>=0?"arriba":"abajo"} del objetivo.`);u.lang="es-US";speechSynthesis.cancel();speechSynthesis.speak(u)}
+$("voice").onclick=()=>{voiceOn=!voiceOn;$("voice").textContent=voiceOn?"🔊 Voz activada cada minuto":"🔇 Activar lectura por voz";if(voiceOn)speak()};$("refresh").onclick=analyze;
+timerId=setInterval(updateTimer,1000);setInterval(()=>{analyze();if(voiceOn)setTimeout(speak,2500)},60000);analyze();
 })();
 </script></body></html>
