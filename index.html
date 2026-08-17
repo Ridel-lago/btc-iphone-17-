@@ -7,13 +7,13 @@
 <meta name="theme-color" content="#07111f">
 <title>BTC Kalshi 15 Min</title>
 <style>
-:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#07111f;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:16px 14px 28px}.wrap{max-width:650px;margin:auto}.card{background:#111d31;border:1px solid #293a59;border-radius:24px;padding:18px;margin-bottom:12px}h1{margin:0;font-size:27px}.muted{color:#9baac2}.status{display:inline-flex;align-items:center;gap:8px;margin-top:10px;font-weight:800}.dot{width:10px;height:10px;border-radius:50%;background:#f5bd42}.online .dot{background:#3bd99a}.error .dot{background:#ff667b}.headline{display:flex;justify-content:space-between;gap:12px;align-items:flex-end;margin-top:14px}.target,.current{font-size:27px;font-weight:900}.current.up{color:#3fe09a}.current.down{color:#ff667b}.signal{font-size:42px;font-weight:950;margin:8px 0}.up{color:#3fe09a}.down{color:#ff667b}.wait{color:#ffd25c}.probs,.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.box{background:#1a2842;border-radius:18px;padding:14px}.box b{display:block;font-size:28px;margin-top:4px}.metric{background:#0b1526;border-radius:16px;padding:12px}.metric b{display:block;margin-top:5px;font-size:18px}.reason{margin-top:12px;padding:13px;background:#0c1728;border-radius:16px;line-height:1.45}.source{margin-top:10px;font-size:13px;font-weight:800}button{width:100%;border:0;border-radius:16px;padding:15px;margin-top:10px;font-size:16px;font-weight:850;background:#fff;color:#07111f}button.alt{background:#1b2b48;color:#fff}.note{font-size:12px;line-height:1.45;color:#91a0b7;margin-top:14px}
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#07111f;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:16px 14px 28px}.wrap{max-width:650px;margin:auto}.card{background:#111d31;border:1px solid #293a59;border-radius:24px;padding:18px;margin-bottom:12px}h1{margin:0;font-size:27px}.muted{color:#9baac2}.status{display:inline-flex;align-items:center;gap:8px;margin-top:10px;font-weight:800}.dot{width:10px;height:10px;border-radius:50%;background:#f5bd42}.online .dot{background:#3bd99a}.error .dot{background:#ff667b}.headline{display:flex;justify-content:space-between;gap:12px;align-items:flex-end;margin-top:14px}.target,.current{font-size:27px;font-weight:900}.current.up{color:#3fe09a}.current.down{color:#ff667b}.signal{font-size:36px;font-weight:950;margin:8px 0;line-height:1.05}.up{color:#3fe09a}.down{color:#ff667b}.wait{color:#ffd25c}.exit{color:#62b8ff}.probs,.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.box{background:#1a2842;border-radius:18px;padding:14px}.box b{display:block;font-size:28px;margin-top:4px}.metric{background:#0b1526;border-radius:16px;padding:12px}.metric b{display:block;margin-top:5px;font-size:18px}.reason{margin-top:12px;padding:13px;background:#0c1728;border-radius:16px;line-height:1.45}.source{margin-top:10px;font-size:13px;font-weight:800}button{width:100%;border:0;border-radius:16px;padding:15px;margin-top:10px;font-size:16px;font-weight:850;background:#fff;color:#07111f}button.alt{background:#1b2b48;color:#fff}.note{font-size:12px;line-height:1.45;color:#91a0b7;margin-top:14px}
 </style>
 </head>
 <body><div class="wrap">
 <div class="card">
 <h1>₿ BTC · Kalshi 15 min</h1>
-<div class="muted">Mercado oficial KXBTC15M · patrones de 1 minuto</div>
+<div class="muted">Mercado oficial KXBTC15M · patrones de velas de 1 minuto</div>
 <div id="status" class="status"><span class="dot"></span><span id="statusText">Conectando con Kalshi…</span></div>
 <div class="headline"><div><span class="muted">OBJETIVO KALSHI</span><div id="target" class="target">—</div></div><div><span class="muted">BTC ACTUAL</span><div id="price" class="current">—</div></div></div>
 <div id="distance" class="muted">Distancia al objetivo: —</div>
@@ -22,12 +22,12 @@
 <div id="source" class="source muted">Fuentes: Kalshi + Coinbase</div>
 </div>
 <div class="card">
-<div class="muted">PROBABILIDAD DE TERMINAR SOBRE/BAJO EL OBJETIVO</div>
+<div class="muted">OPORTUNIDAD SEGÚN PRECIO Y PATRONES</div>
 <div id="signal" class="signal wait">ESPERAR</div>
 <div id="confidence" class="muted">Calculando…</div>
 <div class="probs"><div class="box"><span class="muted">UP · Kalshi</span><b id="pup" class="up">—</b></div><div class="box"><span class="muted">DOWN · Kalshi</span><b id="pdown" class="down">—</b></div></div>
 <div class="grid">
-<div class="metric"><span class="muted">Patrón 1 min</span><b id="pattern">—</b></div>
+<div class="metric"><span class="muted">Patrón de velas</span><b id="pattern">—</b></div>
 <div class="metric"><span class="muted">Velas 3 min</span><b id="candles">—</b></div>
 <div class="metric"><span class="muted">EMA 9 / 21</span><b id="ema">—</b></div>
 <div class="metric"><span class="muted">RSI 14</span><b id="rsi">—</b></div>
@@ -36,7 +36,7 @@
 </div>
 <div id="reason" class="reason">Buscando el mercado activo de Kalshi…</div>
 <button id="voice">🔊 Activar lectura por voz</button><button id="refresh" class="alt">↻ Analizar ahora</button>
-<div class="note">El porcentaje UP/DOWN viene del precio del contrato en Kalshi. Los patrones técnicos sirven como apoyo, no garantizan el resultado. El bot muestra ESPERAR cuando la ventaja no es clara.</div>
+<div class="note">ENTRADA TEMPRANA busca contratos entre 40% y 50% con confirmación técnica. POSIBLE SALIDA aparece al llegar a 60%–70% o cuando la señal pierde fuerza. Son avisos educativos: ningún patrón garantiza ganancias.</div>
 </div></div>
 <script>
 (()=>{
@@ -49,43 +49,60 @@ async function json(url,timeout=9000){const c=new AbortController(),tm=setTimeou
 function EMA(v,p){if(v.length<p)return null;let k=2/(p+1),e=v.slice(0,p).reduce((a,b)=>a+b,0)/p;for(let i=p;i<v.length;i++)e=v[i]*k+e*(1-k);return e}
 function RSI(v,p=14){if(v.length<=p)return null;let g=0,l=0;for(let i=1;i<=p;i++){let d=v[i]-v[i-1];if(d>0)g+=d;else l-=d}let ag=g/p,al=l/p;for(let i=p+1;i<v.length;i++){let d=v[i]-v[i-1];ag=(ag*(p-1)+Math.max(d,0))/p;al=(al*(p-1)+Math.max(-d,0))/p}return al===0?100:100-100/(1+ag/al)}
 function cents(m,key){const d=m[key+"_dollars"];if(d!==undefined&&d!==null&&d!=="")return +d*100;const v=m[key];return Number.isFinite(+v)?+v:null}
-function kalshiOdds(m){let ya=cents(m,"yes_ask"),yb=cents(m,"yes_bid");if(ya===null&&yb===null){const lp=cents(m,"last_price");return lp===null?50:lp}if(ya===null)return yb;if(yb===null)return ya;return (ya+yb)/2}
+function kalshiOdds(m){let ya=cents(m,"yes_ask"),yb=cents(m,"yes_bid");if(ya===null&&yb===null){const lp=cents(m,"last_price");return lp===null?50:lp}if(ya===null)return yb;if(yb===null)return ya;return(ya+yb)/2}
 async function getKalshi(){
- const url=K+"/markets?series_ticker=KXBTC15M&status=open&limit=100";
- let d,errors=[];
- for(const u of [url,"https://api.allorigins.win/raw?url="+encodeURIComponent(url),"https://corsproxy.io/?url="+encodeURIComponent(url)]){
-  try{d=await json(u,10000);if(d?.markets?.length)break}catch(e){errors.push(e.message)}
- }
+ const url=K+"/markets?series_ticker=KXBTC15M&status=open&limit=100";let d,errors=[];
+ for(const u of [url,"https://api.allorigins.win/raw?url="+encodeURIComponent(url),"https://corsproxy.io/?url="+encodeURIComponent(url)]){try{d=await json(u,10000);if(d?.markets?.length)break}catch(e){errors.push(e.message)}}
  if(!d?.markets?.length)throw Error("Kalshi bloqueó la conexión: "+errors.join(" / "));
  const now=Date.now(),list=(d.markets||[]).filter(m=>new Date(m.close_time).getTime()>now).sort((a,b)=>new Date(a.close_time)-new Date(b.close_time));
  if(!list.length)throw Error("Kalshi no devolvió un mercado BTC 15 min abierto");return list[0]
 }
 async function getCoinbase(){const d=await json("https://api.exchange.coinbase.com/products/BTC-USD/candles?granularity=60");if(!Array.isArray(d)||d.length<25)throw Error("Coinbase sin velas");return d.slice(0,70).map(r=>({t:+r[0],low:+r[1],high:+r[2],open:+r[3],close:+r[4],vol:+r[5]})).sort((a,b)=>a.t-b.t)}
 function updateTimer(){if(!activeMarket)return;const s=Math.max(0,Math.ceil((new Date(activeMarket.close_time)-Date.now())/1000)),mm=Math.floor(s/60),ss=String(s%60).padStart(2,"0");$("timer").textContent=`Tiempo restante: ${mm}:${ss}`;if(s===0&&!busy)setTimeout(analyze,1200)}
-function candlePattern(rows){const a=rows.at(-1),b=rows.at(-2),body=Math.abs(a.close-a.open),range=Math.max(.01,a.high-a.low);if(a.close>b.high)return"Ruptura alcista";if(a.close<b.low)return"Ruptura bajista";if(body/range<.18)return"Indecisión";if(a.close>a.open&&b.close<b.open&&a.close>=b.open&&a.open<=b.close)return"Envolvente alcista";if(a.close<a.open&&b.close>b.open&&a.open>=b.close&&a.close<=b.open)return"Envolvente bajista";return a.close>a.open?"Vela alcista":a.close<a.open?"Vela bajista":"Neutral"}
+function candlePattern(rows){
+ const a=rows.at(-1),b=rows.at(-2),c=rows.at(-3),body=x=>Math.abs(x.close-x.open),range=x=>Math.max(.01,x.high-x.low),upper=x=>x.high-Math.max(x.open,x.close),lower=x=>Math.min(x.open,x.close)-x.low,bull=x=>x.close>x.open,bear=x=>x.close<x.open;
+ const ab=body(a),ar=range(a),bb=body(b),br=range(b),avgBody=rows.slice(-12,-3).reduce((s,x)=>s+body(x),0)/9;
+ if(bull(a)&&bull(b)&&bull(c)&&a.close>b.close&&b.close>c.close&&body(a)>.55*range(a)&&body(b)>.55*range(b))return{name:"Tres soldados blancos",bias:2};
+ if(bear(a)&&bear(b)&&bear(c)&&a.close<b.close&&b.close<c.close&&body(a)>.55*range(a)&&body(b)>.55*range(b))return{name:"Tres cuervos negros",bias:-2};
+ if(bear(c)&&body(c)>.5*range(c)&&body(b)<.35*range(b)&&bull(a)&&a.close>(c.open+c.close)/2)return{name:"Estrella de la mañana",bias:2};
+ if(bull(c)&&body(c)>.5*range(c)&&body(b)<.35*range(b)&&bear(a)&&a.close<(c.open+c.close)/2)return{name:"Estrella de la tarde",bias:-2};
+ if(bull(a)&&bear(b)&&a.close>=b.open&&a.open<=b.close)return{name:"Envolvente alcista",bias:2};
+ if(bear(a)&&bull(b)&&a.open>=b.close&&a.close<=b.open)return{name:"Envolvente bajista",bias:-2};
+ if(bull(b)&&bear(a)&&a.open<b.close&&a.close>b.open)return{name:"Harami bajista",bias:-1};
+ if(bear(b)&&bull(a)&&a.open>b.close&&a.close<b.open)return{name:"Harami alcista",bias:1};
+ if(ab/ar<.1)return{name:"Doji — indecisión",bias:0};
+ if(lower(a)>ab*2.2&&upper(a)<ab*.7)return{name:"Martillo",bias:1};
+ if(upper(a)>ab*2.2&&lower(a)<ab*.7)return bear(a)?{name:"Estrella fugaz",bias:-1}:{name:"Martillo invertido",bias:1};
+ if(ab/ar<.3&&ab<avgBody*.7)return{name:"Peonza — indecisión",bias:0};
+ if(a.close>b.high)return{name:"Ruptura alcista",bias:1};
+ if(a.close<b.low)return{name:"Ruptura bajista",bias:-1};
+ return bull(a)?{name:"Vela alcista",bias:0}:bear(a)?{name:"Vela bajista",bias:0}:{name:"Neutral",bias:0}
+}
 async function analyze(){
  if(busy)return;busy=true;setStatus("Actualizando Kalshi…");
  try{
-  const [m,rows]=await Promise.all([getKalshi(),getCoinbase()]);activeMarket=m;updateTimer();
+  const[m,rows]=await Promise.all([getKalshi(),getCoinbase()]);activeMarket=m;updateTimer();
   const closes=rows.map(x=>x.close),price=closes.at(-1),target=+m.floor_strike,e9=EMA(closes,9),e21=EMA(closes,21),rsi=RSI(closes),last=rows.at(-1);
   if(!Number.isFinite(target))throw Error("Kalshi no envió el objetivo");
-  const dist=price-target,mom1=(closes.at(-1)-closes.at(-2))/closes.at(-2)*100;
-  const recent=rows.slice(-3),bull=recent.filter(x=>x.close>x.open).length,bear=recent.filter(x=>x.close<x.open).length;
-  const vols=rows.map(x=>x.vol),vavg=vols.slice(-16,-1).reduce((a,b)=>a+b,0)/15,vr=last.vol/vavg;
-  const pattern=candlePattern(rows),marketUp=Math.round(clamp(kalshiOdds(m),1,99)),marketDown=100-marketUp;
-  let signal="ESPERAR",cls="wait";if(marketUp>=60){signal="UP";cls="up"}else if(marketDown>=60){signal="DOWN";cls="down"}
-  const technical=(e9>e21?1:-1)+(mom1>.015?1:mom1<-.015?-1:0)+(rsi>52?1:rsi<48?-1:0);
-  const agrees=(signal==="UP"&&technical>0)||(signal==="DOWN"&&technical<0);
-  const confidence=signal==="ESPERAR"?"POCA CONFIANZA — ESPERAR":agrees?"Kalshi y patrones coinciden":"PRECAUCIÓN — Kalshi y patrones no coinciden";
+  const dist=price-target,mom1=(closes.at(-1)-closes.at(-2))/closes.at(-2)*100,recent=rows.slice(-3),bulls=recent.filter(x=>x.close>x.open).length,bears=recent.filter(x=>x.close<x.open).length;
+  const vols=rows.map(x=>x.vol),vavg=vols.slice(-16,-1).reduce((a,b)=>a+b,0)/15,vr=last.vol/vavg,pattern=candlePattern(rows),marketUp=Math.round(clamp(kalshiOdds(m),1,99)),marketDown=100-marketUp;
+  let technical=(e9>e21?1:-1)+(mom1>.015?1:mom1<-.015?-1:0)+(rsi>52?1:rsi<48?-1:0)+pattern.bias;
+  if(vr<.65)technical=technical>0?technical-1:technical<0?technical+1:0;
+  let signal="ESPERAR",cls="wait",side="",confidence="Sin confirmación suficiente";
+  if(marketUp>=40&&marketUp<=50&&technical>=2){signal="ENTRADA TEMPRANA UP";cls="up";side="UP";confidence="Precio temprano + patrones alcistas"}
+  else if(marketDown>=40&&marketDown<=50&&technical<=-2){signal="ENTRADA TEMPRANA DOWN";cls="down";side="DOWN";confidence="Precio temprano + patrones bajistas"}
+  else if(marketUp>=60&&marketUp<=70){signal="POSIBLE SALIDA UP";cls="exit";side="UP";confidence=technical>0?"UP avanzó; todavía tiene apoyo técnico":"UP perdió apoyo técnico"}
+  else if(marketDown>=60&&marketDown<=70){signal="POSIBLE SALIDA DOWN";cls="exit";side="DOWN";confidence=technical<0?"DOWN avanzó; todavía tiene apoyo técnico":"DOWN perdió apoyo técnico"}
+  else if(marketUp>70||marketDown>70){side=marketUp>marketDown?"UP":"DOWN";signal=`${side} MUY AVANZADO`;cls="wait";confidence="Evitar perseguir un contrato ya caro"}
   $("target").textContent=money(target);$("price").textContent=money(price);$("price").className="current "+(dist>=0?"up":"down");
   $("distance").textContent=`Distancia al objetivo: ${dist>=0?"+":""}${money(dist)} (${dist>=0?"arriba":"abajo"})`;
   $("signal").textContent=signal;$("signal").className="signal "+cls;$("confidence").textContent=confidence;$("pup").textContent=marketUp+"%";$("pdown").textContent=marketDown+"%";
-  $("pattern").textContent=pattern;$("candles").textContent=bull>bear?`${bull}/3 alcistas`:bear>bull?`${bear}/3 bajistas`:"Mixtas";$("ema").textContent=e9>e21?"Alcista":"Bajista";$("rsi").textContent=rsi.toFixed(1);$("mom1").textContent=(mom1>=0?"+":"")+mom1.toFixed(3)+"%";$("volume").textContent=vr>1.2?"Alto":vr<.8?"Bajo":"Normal";
-  $("reason").textContent=`Kalshi marca ${marketUp}% UP y ${marketDown}% DOWN. BTC está ${Math.abs(dist).toFixed(2)} dólares ${dist>=0?"sobre":"bajo"} el objetivo. Patrón: ${pattern.toLowerCase()}.`;
+  $("pattern").textContent=pattern.name;$("candles").textContent=bulls>bears?`${bulls}/3 alcistas`:bears>bulls?`${bears}/3 bajistas`:"Mixtas";$("ema").textContent=e9>e21?"Alcista":"Bajista";$("rsi").textContent=rsi.toFixed(1);$("mom1").textContent=(mom1>=0?"+":"")+mom1.toFixed(3)+"%";$("volume").textContent=vr>1.2?"Alto":vr<.8?"Bajo":"Normal";
+  $("reason").textContent=`Kalshi: ${marketUp}% UP y ${marketDown}% DOWN. Patrón: ${pattern.name}. Confirmación técnica: ${technical>=2?"alcista":technical<=-2?"bajista":"débil"}. BTC está ${Math.abs(dist).toFixed(2)} dólares ${dist>=0?"sobre":"bajo"} el objetivo.`;
   $("updated").textContent="Actualizado: "+new Date().toLocaleTimeString("es-US")+" · mercado "+m.ticker;setStatus("KALSHI EN VIVO","online");lastResult={price,target,dist,signal,up:marketUp,down:marketDown};
  }catch(e){setStatus("Sin conexión","error");$("reason").textContent="No pude leer Kalshi o los patrones de Bitcoin. Pulsa Analizar ahora. Detalle: "+e.message}finally{busy=false}
 }
-function speak(){if(!voiceOn||!lastResult||!("speechSynthesis"in window))return;const r=lastResult,u=new SpeechSynthesisUtterance(`Kalshi Bitcoin quince minutos. Señal ${r.signal}. Up ${r.up} por ciento. Down ${r.down} por ciento. Bitcoin está ${Math.abs(Math.round(r.dist))} dólares ${r.dist>=0?"arriba":"abajo"} del objetivo.`);u.lang="es-US";speechSynthesis.cancel();speechSynthesis.speak(u)}
+function speak(){if(!voiceOn||!lastResult||!("speechSynthesis"in window))return;const r=lastResult,u=new SpeechSynthesisUtterance(`Kalshi Bitcoin quince minutos. ${r.signal}. Up ${r.up} por ciento. Down ${r.down} por ciento. Bitcoin está ${Math.abs(Math.round(r.dist))} dólares ${r.dist>=0?"arriba":"abajo"} del objetivo.`);u.lang="es-US";speechSynthesis.cancel();speechSynthesis.speak(u)}
 $("voice").onclick=()=>{voiceOn=!voiceOn;$("voice").textContent=voiceOn?"🔊 Voz activada cada minuto":"🔇 Activar lectura por voz";if(voiceOn)speak()};$("refresh").onclick=analyze;
 timerId=setInterval(updateTimer,1000);setInterval(()=>{analyze();if(voiceOn)setTimeout(speak,2500)},60000);analyze();
 })();
