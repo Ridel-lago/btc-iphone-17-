@@ -89,7 +89,7 @@ async function analyze(){
   let technical=(e9>e21?1:-1)+(mom1>.015?1:mom1<-.015?-1:0)+(rsi>52?1:rsi<48?-1:0)+pattern.bias;
   if(vr<.65)technical=technical>0?technical-1:technical<0?technical+1:0;
   let signal="ESPERAR",cls="wait",side="",confidence="Sin confirmación suficiente";
-  if(marketUp>=40&&marketUp<=50&&technical>=2){signal="ENTRADA TEMPRANA UP";cls="up";side="UP";confidence="Precio temprano + patrones alcistas"}
+  if(marketUp>=35&&marketUp<=55&&technical>=2){signal="ENTRADA TEMPRANA UP";cls="up";side="UP";confidence="Precio temprano + patrones alcistas"}
   else if(marketDown>=40&&marketDown<=50&&technical<=-2){signal="ENTRADA TEMPRANA DOWN";cls="down";side="DOWN";confidence="Precio temprano + patrones bajistas"}
   else if(marketUp>=60&&marketUp<=70){signal="POSIBLE SALIDA UP";cls="exit";side="UP";confidence=technical>0?"UP avanzó; todavía tiene apoyo técnico":"UP perdió apoyo técnico"}
   else if(marketDown>=60&&marketDown<=70){signal="POSIBLE SALIDA DOWN";cls="exit";side="DOWN";confidence=technical<0?"DOWN avanzó; todavía tiene apoyo técnico":"DOWN perdió apoyo técnico"}
