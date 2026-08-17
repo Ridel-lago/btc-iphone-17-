@@ -90,7 +90,7 @@ async function analyze(){
   if(vr<.65)technical=technical>0?technical-1:technical<0?technical+1:0;
   let signal="ESPERAR",cls="wait",side="",confidence="Sin confirmación suficiente";
   if(marketUp>=35&&marketUp<=55&&technical>=2){signal="ENTRADA TEMPRANA UP";cls="up";side="UP";confidence="Precio temprano + patrones alcistas"}
-  else if(marketDown>=40&&marketDown<=50&&technical<=-2){signal="ENTRADA TEMPRANA DOWN";cls="down";side="DOWN";confidence="Precio temprano + patrones bajistas"}
+  else if(marketDown>=35&&marketDown<=55&&technical<=-2){signal="ENTRADA TEMPRANA DOWN";cls="down";side="DOWN";confidence="Precio temprano + patrones bajistas"}
   else if(marketUp>=60&&marketUp<=70){signal="POSIBLE SALIDA UP";cls="exit";side="UP";confidence=technical>0?"UP avanzó; todavía tiene apoyo técnico":"UP perdió apoyo técnico"}
   else if(marketDown>=60&&marketDown<=70){signal="POSIBLE SALIDA DOWN";cls="exit";side="DOWN";confidence=technical<0?"DOWN avanzó; todavía tiene apoyo técnico":"DOWN perdió apoyo técnico"}
   else if(marketUp>70||marketDown>70){side=marketUp>marketDown?"UP":"DOWN";signal=`${side} MUY AVANZADO`;cls="wait";confidence="Evitar perseguir un contrato ya caro"}
