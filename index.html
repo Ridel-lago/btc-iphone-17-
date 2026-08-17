@@ -105,5 +105,7 @@ async function analyze(){
 function speak(){if(!voiceOn||!lastResult||!("speechSynthesis"in window))return;const r=lastResult,u=new SpeechSynthesisUtterance(`Kalshi Bitcoin quince minutos. ${r.signal}. Up ${r.up} por ciento. Down ${r.down} por ciento. Bitcoin está ${Math.abs(Math.round(r.dist))} dólares ${r.dist>=0?"arriba":"abajo"} del objetivo.`);u.lang="es-US";speechSynthesis.cancel();speechSynthesis.speak(u)}
 $("voice").onclick=()=>{voiceOn=!voiceOn;$("voice").textContent=voiceOn?"🔊 Voz activada cada minuto":"🔇 Activar lectura por voz";if(voiceOn)speak()};$("refresh").onclick=analyze;
 timerId=setInterval(updateTimer,1000);setInterval(()=>{analyze();if(voiceOn)setTimeout(speak,2500)},60000);analyze();
-})();
+
+
+setInterval(analyze,5000);})();
 </script></body></html>
