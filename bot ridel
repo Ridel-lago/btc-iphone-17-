@@ -1,0 +1,1034 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07111f">
+<title>BTC · Entrada Anticipada</title>
+
+<style>
+:root{
+  --bg:#07111f;
+  --card:#0d1a2b;
+  --card2:#101f33;
+  --line:#20344e;
+  --text:#f7fbff;
+  --muted:#8fa7c0;
+  --green:#23d18b;
+  --red:#ff5f6d;
+  --yellow:#ffd166;
+  --blue:#53a7ff;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:linear-gradient(180deg,#06101d,#0a1422 55%,#07111f);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif
+}
+
+.wrap{
+  max-width:760px;
+  margin:auto;
+  padding:14px 12px 40px
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin:4px 0 12px
+}
+
+.brand{
+  font-size:21px;
+  font-weight:900;
+  letter-spacing:.2px
+}
+
+.badge{
+  font-size:12px;
+  border:1px solid var(--line);
+  background:#0b1726;
+  padding:7px 10px;
+  border-radius:999px;
+  color:#bcd0e5
+}
+
+.card{
+  background:linear-gradient(180deg,var(--card2),var(--card));
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:14px;
+  margin:10px 0;
+  box-shadow:0 12px 28px rgba(0,0,0,.22)
+}
+
+.grid2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px
+}
+
+.label{
+  font-size:11px;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.8px
+}
+
+.value{
+  font-size:24px;
+  font-weight:900;
+  margin-top:4px
+}
+
+.small{
+  font-size:13px;
+  color:var(--muted)
+}
+
+.center{text-align:center}
+
+.round{
+  font-size:46px;
+  font-weight:1000;
+  line-height:1
+}
+
+.signal{
+  font-size:34px;
+  font-weight:1000;
+  margin:6px 0
+}
+
+.wait{color:var(--yellow)}
+.up{color:var(--green)}
+.down{color:var(--red)}
+
+.probs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:12px
+}
+
+.prob{
+  border-radius:16px;
+  padding:13px;
+  border:1px solid var(--line);
+  background:#0a1625
+}
+
+.prob .n{
+  font-size:32px;
+  font-weight:1000
+}
+
+.bar{
+  height:9px;
+  background:#16283c;
+  border-radius:999px;
+  overflow:hidden;
+  margin-top:8px
+}
+
+.fill{
+  height:100%;
+  border-radius:999px
+}
+
+.upfill{background:var(--green)}
+.downfill{background:var(--red)}
+
+.earlybox{
+  margin:12px 0 2px;
+  padding:14px;
+  border-radius:16px;
+  border:1px solid #2f7f67;
+  background:#0c2a24;
+  text-align:center
+}
+
+.earlytitle{
+  font-size:12px;
+  color:#9de8ca;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-weight:900
+}
+
+.earlysignal{
+  font-size:28px;
+  font-weight:1000;
+  margin-top:5px
+}
+
+.earlymeta{
+  font-size:13px;
+  color:#b7d7ca;
+  margin-top:5px
+}
+
+.confirm{
+  padding:12px;
+  border-radius:14px;
+  border:1px solid #42516a;
+  background:#121c2a;
+  font-weight:900;
+  text-align:center;
+  font-size:19px
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  align-items:center;
+  padding:9px 0;
+  border-bottom:1px solid rgba(255,255,255,.06)
+}
+
+.row:last-child{border-bottom:0}
+
+.pill{
+  font-size:12px;
+  padding:5px 8px;
+  border-radius:999px;
+  background:#13263a;
+  color:#c8d8e8
+}
+
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:10px
+}
+
+button{
+  border:0;
+  border-radius:14px;
+  padding:13px 10px;
+  font-weight:850;
+  font-size:15px;
+  background:#17304a;
+  color:white
+}
+
+button.primary{background:#1a6fd1}
+button.good{background:#145d45}
+button.bad{background:#7d2630}
+
+.memory{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px
+}
+
+.stat{
+  background:#0a1625;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:11px;
+  text-align:center
+}
+
+.stat b{
+  display:block;
+  font-size:22px;
+  margin-top:3px
+}
+
+.alert{
+  border:1px solid #6a5521;
+  background:#2c240f;
+  color:#ffe7a5;
+  border-radius:14px;
+  padding:10px 12px;
+  font-size:13px
+}
+
+.footer{
+  font-size:11px;
+  color:#71879e;
+  text-align:center;
+  margin-top:14px
+}
+
+.bookgrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:10px
+}
+
+.bookitem{
+  background:#0a1625;
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:10px
+}
+
+.bookitem b{
+  display:block;
+  font-size:13px;
+  margin-bottom:3px
+}
+
+.bookitem span{
+  font-size:11px;
+  color:var(--muted)
+}
+
+.brainlog{
+  max-height:180px;
+  overflow:auto;
+  margin-top:10px;
+  border-top:1px solid rgba(255,255,255,.06)
+}
+
+.logline{
+  font-size:12px;
+  color:#b8c9da;
+  padding:7px 0;
+  border-bottom:1px solid rgba(255,255,255,.05)
+}
+
+.csscandles{
+  height:220px;
+  background:#07111f;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:12px 8px;
+  display:flex;
+  align-items:flex-end;
+  gap:5px;
+  margin-top:10px;
+  overflow:hidden
+}
+
+.cndl{
+  position:relative;
+  width:18px;
+  flex:1;
+  min-width:8px;
+  height:100%
+}
+
+.cndl:before{
+  content:"";
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  width:2px;
+  top:var(--wickTop);
+  bottom:var(--wickBottom);
+  background:var(--c)
+}
+
+.cndl:after{
+  content:"";
+  position:absolute;
+  left:18%;
+  right:18%;
+  top:var(--bodyTop);
+  height:var(--bodyH);
+  background:var(--c);
+  border-radius:2px
+}
+
+@media(max-width:430px){
+  .brand{font-size:19px}
+  .value{font-size:21px}
+  .round{font-size:42px}
+  .signal{font-size:31px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<div class="top">
+  <div class="brand">₿ BTC · ENTRADA ANTICIPADA</div>
+  <div class="badge" id="mode">VISTA PREVIA</div>
+</div>
+
+<div class="card">
+  <div class="grid2">
+    <div>
+      <div class="label">BTC ahora</div>
+      <div class="value" id="btc">$112,640.20</div>
+      <div class="small">Precio de referencia</div>
+    </div>
+
+    <div>
+      <div class="label">Objetivo Kalshi</div>
+      <div class="value" id="target">$112,700.00</div>
+      <div class="small" id="distance">Faltan +$59.80</div>
+    </div>
+  </div>
+</div>
+
+<div class="card center">
+  <div class="label">Ronda BTC · 15 min</div>
+  <div class="round" id="timer">08:42</div>
+  <div class="small">Sincronizada al inicio de la ronda</div>
+</div>
+
+<div class="card center">
+
+  <div class="earlybox">
+    <div class="earlytitle">⚡ ENTRADA ANTICIPADA</div>
+    <div class="earlysignal up" id="earlySignal">ENTRAR UP · 42%</div>
+    <div class="earlymeta" id="earlyMeta">
+      Aviso temprano antes de la confirmación principal
+    </div>
+  </div>
+
+  <div class="label" style="margin-top:12px">Señal principal</div>
+
+  <div class="signal up" id="mainSignal">
+    ENTRADA ANTICIPADA · UP
+  </div>
+
+  <div class="small" id="reason">
+    Kalshi + técnica + memoria favorecen UP temprano
+  </div>
+
+  <div class="probs">
+
+    <div class="prob">
+      <div class="label">UP</div>
+      <div class="n up" id="upNum">63%</div>
+      <div class="bar">
+        <div class="fill upfill" id="upBar" style="width:63%"></div>
+      </div>
+      <div class="small" style="margin-top:7px">
+        Comprar UP <b id="upAsk">41¢</b>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="label">DOWN</div>
+      <div class="n down" id="downNum">37%</div>
+      <div class="bar">
+        <div class="fill downfill" id="downBar" style="width:37%"></div>
+      </div>
+      <div class="small" style="margin-top:7px">
+        Comprar DOWN <b id="downAsk">60¢</b>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="card">
+  <div class="label" style="margin-bottom:8px">
+    Confirmación después de la entrada
+  </div>
+
+  <div class="confirm up" id="confirm">
+    UP CONFIRMADO
+  </div>
+
+  <div class="small center" style="margin-top:8px">
+    Si pierde fuerza o cambia la dirección, el bot cambia a ESPERAR o avisa salida rápida.
+  </div>
+</div>
+
+<div class="card">
+  <div class="row">
+    <span>EMA 9 / EMA 21</span>
+    <span class="pill up">ALCISTA</span>
+  </div>
+
+  <div class="row">
+    <span>RSI 14</span>
+    <span class="pill" id="rsi">58.7</span>
+  </div>
+
+  <div class="row">
+    <span>Momentum</span>
+    <span class="pill up">POSITIVO</span>
+  </div>
+
+  <div class="row">
+    <span>Presión compra / venta</span>
+    <span class="pill up">COMPRA</span>
+  </div>
+
+  <div class="row">
+    <span>Soporte / resistencia</span>
+    <span class="pill">CERCA SOPORTE</span>
+  </div>
+
+  <div class="row">
+    <span>Patrón de vela</span>
+    <span class="pill up">IMPULSO VERDE</span>
+  </div>
+
+  <div class="row">
+    <span>Datos atrasados</span>
+    <span class="pill up">PROTECCIÓN ACTIVA</span>
+  </div>
+</div>
+
+<div class="card">
+
+  <div class="label">🕯️ Velas japonesas BTC</div>
+  <div class="small">
+    Vista de guía de la dirección de las velas
+  </div>
+
+  <div class="csscandles">
+
+    <div class="cndl"
+      style="--c:#ff5f6d;--wickTop:22%;--wickBottom:18%;--bodyTop:32%;--bodyH:22%">
+    </div>
+
+    <div class="cndl"
+      style="--c:#ff5f6d;--wickTop:30%;--wickBottom:15%;--bodyTop:38%;--bodyH:18%">
+    </div>
+
+    <div class="cndl"
+      style="--c:#23d18b;--wickTop:42%;--wickBottom:12%;--bodyTop:48%;--bodyH:20%">
+    </div>
+
+    <div class="cndl"
+      style="--c:#ff5f6d;--wickTop:35%;--wickBottom:18%;--bodyTop:41%;--bodyH:17%">
+    </div>
+
+    <div class="cndl"
+      style="--c:#23d18b;--wickTop:50%;--wickBottom:10%;--bodyTop:55%;--bodyH:19%">
+    </div>
+
+    <div class="cndl"
+      style="--c:#23d18b;--wickTop:56%;--wickBottom:8%;--bodyTop:60%;--bodyH:23%">
+    </div>
+
+    <div class="cndl"
+      style="--c:#ff5f6d;--wickTop:48%;--wickBottom:12%;--bodyTop:54%;--bodyH:16%">
+    </div>
+
+    <div class="cndl"
+      style="--c:#23d18b;--wickTop:61%;--wickBottom:8%;--bodyTop:65%;--bodyH:20%">
+    </div>
+
+    <div class="cndl"
+      style="--c:#23d18b;--wickTop:67%;--wickBottom:6%;--bodyTop:70%;--bodyH:22%">
+    </div>
+
+    <div class="cndl"
+      style="--c:#23d18b;--wickTop:72%;--wickBottom:5%;--bodyTop:75%;--bodyH:18%">
+    </div>
+
+  </div>
+
+  <div class="row">
+    <span>Última vela</span>
+    <span class="pill up" id="lastCandle">VERDE</span>
+  </div>
+
+  <div class="row">
+    <span>Dirección corta</span>
+    <span class="pill up">UP</span>
+  </div>
+
+  <div class="row">
+    <span>Impulso</span>
+    <span class="pill">FUERTE</span>
+  </div>
+
+</div>
+
+<div class="card">
+
+  <div class="label">📚 Libro completo de velas</div>
+
+  <div class="small">
+    El cerebrito registra qué patrón apareció antes de cada resultado.
+  </div>
+
+  <div class="bookgrid">
+
+    <div class="bookitem"><b>Martillo</b><span>Posible rebote alcista</span></div>
+    <div class="bookitem"><b>Martillo invertido</b><span>Posible giro alcista</span></div>
+    <div class="bookitem"><b>Hombre colgado</b><span>Posible giro bajista</span></div>
+    <div class="bookitem"><b>Estrella fugaz</b><span>Rechazo bajista</span></div>
+    <div class="bookitem"><b>Doji</b><span>Indecisión / posible giro</span></div>
+    <div class="bookitem"><b>Doji libélula</b><span>Rechazo desde abajo</span></div>
+    <div class="bookitem"><b>Doji lápida</b><span>Rechazo desde arriba</span></div>
+    <div class="bookitem"><b>Marubozu verde</b><span>Impulso alcista fuerte</span></div>
+    <div class="bookitem"><b>Marubozu rojo</b><span>Impulso bajista fuerte</span></div>
+    <div class="bookitem"><b>Envolvente alcista</b><span>Compradores toman control</span></div>
+    <div class="bookitem"><b>Envolvente bajista</b><span>Vendedores toman control</span></div>
+    <div class="bookitem"><b>Harami alcista</b><span>Posible recuperación</span></div>
+    <div class="bookitem"><b>Harami bajista</b><span>Posible debilitamiento</span></div>
+    <div class="bookitem"><b>Estrella de la mañana</b><span>Reversión alcista</span></div>
+    <div class="bookitem"><b>Estrella de la tarde</b><span>Reversión bajista</span></div>
+    <div class="bookitem"><b>Tres soldados blancos</b><span>Continuación alcista</span></div>
+    <div class="bookitem"><b>Tres cuervos negros</b><span>Continuación bajista</span></div>
+    <div class="bookitem"><b>Pin bar alcista</b><span>Rechazo de caída</span></div>
+    <div class="bookitem"><b>Pin bar bajista</b><span>Rechazo de subida</span></div>
+    <div class="bookitem"><b>Inside bar</b><span>Compresión / espera ruptura</span></div>
+
+  </div>
+
+  <div class="row">
+    <span>Patrón detectado ahora</span>
+    <span class="pill up" id="patternNow">IMPULSO VERDE</span>
+  </div>
+
+</div>
+
+<div class="card">
+
+  <div class="label" style="margin-bottom:8px">
+    🧠 Cerebrito artificial
+  </div>
+
+  <div class="confirm">
+    APRENDIENDO DE CADA RONDA
+  </div>
+
+  <div class="small center" style="margin-top:8px">
+    Guarda el resultado de las entradas y aprende de GANADAS, PERDIDAS y PROFIT.
+  </div>
+
+  <div class="row">
+    <span>Casos aprendidos</span>
+    <span class="pill" id="learned">0</span>
+  </div>
+
+  <div class="row">
+    <span>Precisión aprendida</span>
+    <span class="pill" id="learnAccuracy">—</span>
+  </div>
+
+  <div class="row">
+    <span>Estado</span>
+    <span class="pill up">MEMORIA ACTIVA</span>
+  </div>
+
+  <div class="row">
+    <span>Patrón usado ahora</span>
+    <span class="pill" id="brainPattern">—</span>
+  </div>
+
+  <div class="row">
+    <span>Peso del patrón</span>
+    <span class="pill" id="brainWeight">1.00×</span>
+  </div>
+
+  <div class="row">
+    <span>Patrones buenos</span>
+    <span class="pill" id="goodPatterns">0</span>
+  </div>
+
+  <div class="row">
+    <span>Errores detectados</span>
+    <span class="pill" id="badPatterns">0</span>
+  </div>
+
+  <div class="brainlog" id="brainLog"></div>
+
+</div>
+
+<div class="card">
+
+  <div class="label">Memoria de rondas</div>
+
+  <div class="memory">
+
+    <div class="stat">
+      <span class="small">Rondas</span>
+      <b id="rounds">0</b>
+    </div>
+
+    <div class="stat">
+      <span class="small">Ganadas</span>
+      <b class="up" id="wins">0</b>
+    </div>
+
+    <div class="stat">
+      <span class="small">Perdidas</span>
+      <b class="down" id="losses">0</b>
+    </div>
+
+    <div class="stat">
+      <span class="small">Profit</span>
+      <b class="up" id="profits">0</b>
+    </div>
+
+  </div>
+
+  <div class="actions">
+
+    <button class="good" onclick="saveResult(true,'win')">
+      ✓ GANÉ
+    </button>
+
+    <button class="good" onclick="saveResult(true,'profit')">
+      💰 PROFIT
+    </button>
+
+    <button class="bad" onclick="saveResult(false,'loss')">
+      ✕ PERDÍ
+    </button>
+
+    <button id="voiceBtn" onclick="toggleVoice()">
+      🔊 VOZ ACTIVADA
+    </button>
+
+    <button class="primary" onclick="demoShift()">
+      PROBAR CAMBIO
+    </button>
+
+  </div>
+</div>
+
+</div>
+
+<script>
+
+const $ = id => document.getElementById(id);
+
+let voiceOn = true;
+
+const K='btc-entrada-anticipada-nuevo-stats-v2';
+const BK='btc-entrada-anticipada-cerebrito-v2';
+
+function getBrain(){
+
+  let b={
+    history:[],
+    patternScore:{},
+    good:0,
+    bad:0
+  };
+
+  try{
+    b=JSON.parse(localStorage.getItem(BK))||b;
+  }catch(e){}
+
+  b.history ||= [];
+  b.patternScore ||= {};
+  b.good ||= 0;
+  b.bad ||= 0;
+
+  return b;
+}
+
+function saveBrain(b){
+  localStorage.setItem(BK,JSON.stringify(b));
+}
+
+function currentSide(){
+
+  const t=($('mainSignal')?.textContent||'').toUpperCase();
+
+  if(t.includes('DOWN')) return 'DOWN';
+
+  if(t.includes('UP')) return 'UP';
+
+  return 'ESPERAR';
+}
+
+function currentPattern(){
+
+  return $('patternNow')?.textContent ||
+         $('lastCandle')?.textContent ||
+         'SIN PATRÓN';
+}
+
+function loadBrain(){
+
+  const b=getBrain();
+
+  $('goodPatterns').textContent=b.good||0;
+  $('badPatterns').textContent=b.bad||0;
+
+  const pattern=currentPattern();
+
+  const ps=b.patternScore[pattern]||{
+    wins:0,
+    losses:0,
+    profit:0,
+    weight:1
+  };
+
+  $('brainPattern').textContent=pattern;
+
+  $('brainWeight').textContent=
+    Number(ps.weight||1).toFixed(2)+'×';
+
+  $('brainLog').innerHTML=
+    b.history.slice(-8).reverse().map(x=>
+
+      `<div class="logline">
+      ${x.type==='profit'
+        ?'💰 PROFIT'
+        :(x.win?'✅ GANADA':'❌ PERDIDA')}
+      · ${x.pattern}
+      · ${x.side}
+      </div>`
+
+    ).join('')
+    ||
+    '<div class="logline">Todavía no hay rondas clasificadas.</div>';
+}
+
+function loadStats(){
+
+  let s={
+    r:0,
+    w:0,
+    l:0,
+    p:0
+  };
+
+  try{
+    s=JSON.parse(localStorage.getItem(K))||s;
+  }catch(e){}
+
+  $('rounds').textContent=s.r||0;
+  $('wins').textContent=s.w||0;
+  $('losses').textContent=s.l||0;
+  $('profits').textContent=s.p||0;
+
+  $('learned').textContent=s.r||0;
+
+  $('learnAccuracy').textContent=
+    s.r
+    ?Math.round(((s.w||0)/s.r)*100)+'%'
+    :'—';
+}
+
+function saveResult(win,type='win'){
+
+  let s={
+    r:0,
+    w:0,
+    l:0,
+    p:0
+  };
+
+  try{
+    s=JSON.parse(localStorage.getItem(K))||s;
+  }catch(e){}
+
+  s.r++;
+
+  if(win){
+    s.w++;
+
+    if(type==='profit'){
+      s.p++;
+    }
+
+  }else{
+    s.l++;
+  }
+
+  localStorage.setItem(K,JSON.stringify(s));
+
+  const b=getBrain();
+
+  const pattern=currentPattern();
+  const side=currentSide();
+
+  if(!b.patternScore[pattern]){
+
+    b.patternScore[pattern]={
+      wins:0,
+      losses:0,
+      profit:0,
+      weight:1
+    };
+  }
+
+  const ps=b.patternScore[pattern];
+
+  if(win){
+
+    ps.wins++;
+
+    if(type==='profit'){
+      ps.profit++;
+      ps.weight=Math.min(2,ps.weight+0.10);
+    }else{
+      ps.weight=Math.min(2,ps.weight+0.08);
+    }
+
+    b.good++;
+
+  }else{
+
+    ps.losses++;
+    ps.weight=Math.max(.25,ps.weight-.08);
+    b.bad++;
+  }
+
+  b.history.push({
+    ts:Date.now(),
+    win,
+    type,
+    pattern,
+    side,
+    weight:ps.weight
+  });
+
+  if(b.history.length>300){
+    b.history=b.history.slice(-300);
+  }
+
+  saveBrain(b);
+
+  loadStats();
+  loadBrain();
+
+  if(voiceOn && 'speechSynthesis' in window){
+
+    let msg;
+
+    if(type==='profit'){
+
+      msg=
+      'Profit guardado como ronda ganada. El cerebrito reforzó este patrón.';
+
+    }else if(win){
+
+      msg=
+      'Ronda guardada como ganada. El cerebrito reforzó este patrón.';
+
+    }else{
+
+      msg=
+      'Ronda guardada como perdida. El cerebrito reducirá el peso de este patrón.';
+    }
+
+    const u=new SpeechSynthesisUtterance(msg);
+
+    u.lang='es-US';
+
+    speechSynthesis.cancel();
+    speechSynthesis.speak(u);
+  }
+}
+
+function toggleVoice(){
+
+  voiceOn=!voiceOn;
+
+  $('voiceBtn').textContent=
+    voiceOn
+    ?'🔊 VOZ ACTIVADA'
+    :'🔇 VOZ APAGADA';
+}
+
+let up=63;
+
+function demoShift(){
+
+  up=
+    up===63
+    ?48
+    :(up===48?68:63);
+
+  const down=100-up;
+
+  $('upNum').textContent=up+'%';
+
+  $('downNum').textContent=down+'%';
+
+  $('upBar').style.width=up+'%';
+
+  $('downBar').style.width=down+'%';
+
+  if(up>=60){
+
+    $('earlySignal').textContent=
+      'ENTRAR UP · '+Math.max(40,up-21)+'%';
+
+    $('earlySignal').className=
+      'earlysignal up';
+
+    $('mainSignal').textContent=
+      'UP EN DESARROLLO';
+
+    $('mainSignal').className=
+      'signal up';
+
+    $('reason').textContent=
+      'Técnica + memoria favorecen UP';
+
+    $('confirm').textContent=
+      'UP CONFIRMADO';
+
+    $('confirm').className=
+      'confirm up';
+
+  }else{
+
+    $('earlySignal').textContent=
+      'ESPERAR ENTRADA';
+
+    $('earlySignal').className=
+      'earlysignal wait';
+
+    $('mainSignal').textContent=
+      'ESPERAR';
+
+    $('mainSignal').className=
+      'signal wait';
+
+    $('reason').textContent=
+      'La señal todavía no tiene confirmación suficiente';
+
+    $('confirm').textContent=
+      'ESPERAR CONFIRMACIÓN';
+
+    $('confirm').className=
+      'confirm wait';
+  }
+}
+
+let sec=8*60+42;
+
+function updateTimer(){
+
+  sec--;
+
+  if(sec<0){
+    sec=14*60+59;
+  }
+
+  const m=Math.floor(sec/60);
+  const s=sec%60;
+
+  $('timer').textContent=
+    String(m).padStart(2,'0')
+    +':'+
+    String(s).padStart(2,'0');
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+
+  loadStats();
+
+  loadBrain();
+
+  setInterval(updateTimer,1000);
+
+});
+
+</script>
+
+</body>
+</html>
