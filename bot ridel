@@ -1031,4 +1031,6 @@ document.addEventListener('DOMContentLoaded',()=>{
 </script>
 
 </body>
-</<!doctype html>
+</script>
+</body>
+</html>
