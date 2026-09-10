@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+  >
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <title>BTC Kalshi 15M</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 18px;
+      background: #07111f;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: #101c2c;
+      border-radius: 22px;
+      padding: 20px;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 5px 0 6px;
+      font-size: 27px;
+    }
+
+    .subtitle {
+      text-align: center;
+      opacity: .75;
+      margin-bottom: 16px;
+    }
+
+    #timer {
+      text-align: center;
+      font-size: 42px;
+      font-weight: 800;
+      margin: 12px 0;
+    }
+
+    #signal {
+      text-align: center;
+      font-size: 33px;
+      font-weight: 900;
+      margin: 20px 0;
+    }
+
+    .wait {
+      color: white;
+    }
+
+    .upColor {
+      color: #36e57b;
+    }
+
+    .downColor {
+      color: #ff5252;
+    }
+
+    .percentBox {
+      display: flex;
+      gap: 12px;
+    }
+
+    .percent {
+      flex: 1;
+      text-align: center;
+      background: #07111f;
+      padding: 18px 10px;
+      border-radius: 16px;
+    }
+
+    .percentTitle {
+      font-size: 18px;
+      opacity: .8;
+    }
+
+    .percentNumber {
+      font-size: 35px;
+      font-weight: 900;
+      margin-top: 5px;
+    }
+
+    #up {
+      color: #36e57b;
+    }
+
+    #down {
+      color: #ff5252;
+    }
+
+    .info {
+      font-size: 17px;
+      margin-top: 12px;
+      line-height: 1.45;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      margin-top: 12px;
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    #voice {
+      background: #1769e0;
+      color: white;
+    }
+
+    #refresh {
+      background: #25a85a;
+      color: white;
+    }
+
+    #status {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+      opacity: .7;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="card">
+
+    <h1>BTC / KALSHI</h1>
+
+    <div class="subtitle">
+      Bitcoin · Ronda de 15 minutos
+    </div>
+
+    <div id="timer">
+      15:00
+    </div>
+
+    <div id="signal" class="wait">
+      ESPERAR
+    </div>
+
+    <div class="percentBox">
+
+      <div class="percent">
+        <div class="percentTitle">UP</div>
+        <div id="up" class="percentNumber">50%</div>
+      </div>
+
+      <div class="percent">
+        <div class="percentTitle">DOWN</div>
+        <div id="down" class="percentNumber">50%</div>
+      </div>
+
+    </div>
+
+    <div id="btc" class="info">
+      Bitcoin: buscando precio...
+    </div>
+
+    <div id="startPrice" class="info">
+      Precio inicio de ronda: --
+    </div>
+
+    <div id="distance" class="info">
+      Movimiento: --
+    </div>
+
+    <button id="voice">
+      🔇 Activar lectura por voz
+    </button>
+
+    <button id="refresh">
+      🔄 Actualizar ahora
+    </button>
+
+    <div id="status">
+      Iniciando bot...
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+"use strict";
+
+/* =========================================
+   VARIABLES
+========================================= */
+
+let voiceOn = false;
+
+let currentPrice = null;
+let roundStartPrice = null;
+let currentRoundId = null;
+
+let lastResult = {
+  signal: "ESPERAR",
+  up: 50,
+  down: 50,
+  dist: 0
+};
+
+
+/* =========================================
+   ELEMENTOS
+========================================= */
+
+const timerElement =
+  document.getElementById("timer");
+
+const signalElement =
+  document.getElementById("signal");
+
+const upElement =
+  document.getElementById("up");
+
+const downElement =
+  document.getElementById("down");
+
+const btcElement =
+  document.getElementById("btc");
+
+const startPriceElement =
+  document.getElementById("startPrice");
+
+const distanceElement =
+  document.getElementById("distance");
+
+const voiceButton =
+  document.getElementById("voice");
+
+const refreshButton =
+  document.getElementById("refresh");
+
+const statusElement =
+  document.getElementById("status");
+
+
+/* =========================================
+   RONDA DE 15 MINUTOS
+========================================= */
+
+function getRoundId() {
+
+  const now = new Date();
+
+  return (
+    now.getFullYear() +
+    "-" +
+    String(now.getMonth() + 1).padStart(2, "0") +
+    "-" +
+    String(now.getDate()).padStart(2, "0") +
+    "-" +
+    String(now.getHours()).padStart(2, "0") +
+    "-" +
+    Math.floor(now.getMinutes() / 15)
+  );
+
+}
+
+
+/* =========================================
+   TEMPORIZADOR
+========================================= */
+
+function updateTimer() {
+
+  const now = new Date();
+
+  const elapsed =
+    (now.getMinutes() % 15) * 60 +
+    now.getSeconds();
+
+  let remaining =
+    900 - elapsed;
+
+  if (remaining === 900) {
+    remaining = 0;
+  }
+
+  const minutes =
+    Math.floor(remaining / 60);
+
+  const seconds =
+    remaining % 60;
+
+  timerElement.textContent =
+    String(minutes).padStart(2, "0") +
+    ":" +
+    String(seconds).padStart(2, "0");
+
+}
+
+
+/* =========================================
+   GUARDAR MEMORIA LOCAL
+========================================= */
+
+function saveMemory() {
+
+  try {
+
+    const data = {
+      currentRoundId: currentRoundId,
+      roundStartPrice: roundStartPrice,
+      currentPrice: currentPrice,
+      lastResult: lastResult,
+      savedAt: Date.now()
+    };
+
+    localStorage.setItem(
+      "btcKalshi15Memory",
+      JSON.stringify(data)
+    );
+
+  } catch (error) {
+
+    console.log(
+      "No se pudo guardar memoria",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   RECUPERAR MEMORIA
+========================================= */
+
+function loadMemory() {
+
+  try {
+
+    const saved =
+      localStorage.getItem(
+        "btcKalshi15Memory"
+      );
+
+    if (!saved) {
+      return;
+    }
+
+    const data =
+      JSON.parse(saved);
+
+    if (data.currentRoundId) {
+      currentRoundId =
+        data.currentRoundId;
+    }
+
+    if (
+      typeof data.roundStartPrice ===
+      "number"
+    ) {
+      roundStartPrice =
+        data.roundStartPrice;
+    }
+
+    if (
+      typeof data.currentPrice ===
+      "number"
+    ) {
+      currentPrice =
+        data.currentPrice;
+    }
+
+    if (data.lastResult) {
+      lastResult =
+        data.lastResult;
+    }
+
+  } catch (error) {
+
+    console.log(
+      "No se pudo recuperar memoria",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   PRECIO BTC
+========================================= */
+
+async function getBitcoinPrice() {
+
+  const response =
+    await fetch(
+      "https://api.coinbase.com/v2/prices/BTC-USD/spot",
+      {
+        cache: "no-store"
+      }
+    );
+
+  if (!response.ok) {
+
+    throw new Error(
+      "No se pudo obtener BTC"
+    );
+
+  }
+
+  const json =
+    await response.json();
+
+  const price =
+    Number(json.data.amount);
+
+  if (!Number.isFinite(price)) {
+
+    throw new Error(
+      "Precio BTC inválido"
+    );
+
+  }
+
+  return price;
+
+}
+
+
+/* =========================================
+   NUEVA RONDA
+========================================= */
+
+function checkNewRound(price) {
+
+  const newRoundId =
+    getRoundId();
+
+  if (
+    currentRoundId !== newRoundId
+  ) {
+
+    currentRoundId =
+      newRoundId;
+
+    roundStartPrice =
+      price;
+
+    saveMemory();
+
+  }
+
+}
+
+
+/* =========================================
+   CALCULAR MOVIMIENTO
+========================================= */
+
+function calculateSignal() {
+
+  if (
+    currentPrice === null ||
+    roundStartPrice === null
+  ) {
+
+    return;
+
+  }
+
+  const dist =
+    currentPrice -
+    roundStartPrice;
+
+  /*
+    Estos porcentajes se calculan
+    solamente por movimiento del precio
+    BTC desde el comienzo de la ronda.
+
+    No representan el precio oficial
+    UP/DOWN de Kalshi.
+  */
+
+  let strength =
+    Math.min(
+      45,
+      Math.abs(dist) / 3
+    );
+
+  let up =
+    50;
+
+  let down =
+    50;
+
+  if (dist > 0) {
+
+    up =
+      50 + strength;
+
+    down =
+      50 - strength;
+
+  }
+
+  if (dist < 0) {
+
+    down =
+      50 + strength;
+
+    up =
+      50 - strength;
+
+  }
+
+  up =
+    Math.round(up);
+
+  down =
+    100 - up;
+
+  let signal =
+    "ESPERAR";
+
+  if (up >= 60) {
+
+    signal =
+      "POSIBLE UP";
+
+  }
+
+  if (down >= 60) {
+
+    signal =
+      "POSIBLE DOWN";
+
+  }
+
+  if (up >= 70) {
+
+    signal =
+      "UP CONFIRMADO";
+
+  }
+
+  if (down >= 70) {
+
+    signal =
+      "DOWN CONFIRMADO";
+
+  }
+
+  lastResult = {
+    signal: signal,
+    up: up,
+    down: down,
+    dist: dist
+  };
+
+  render();
+
+}
+
+
+/* =========================================
+   MOSTRAR PANTALLA
+========================================= */
+
+function render() {
+
+  const r =
+    lastResult;
+
+  upElement.textContent =
+    r.up + "%";
+
+  downElement.textContent =
+    r.down + "%";
+
+  signalElement.textContent =
+    r.signal;
+
+  signalElement.className =
+    "wait";
+
+  if (
+    r.signal.includes("UP")
+  ) {
+
+    signalElement.className =
+      "upColor";
+
+  }
+
+  if (
+    r.signal.includes("DOWN")
+  ) {
+
+    signalElement.className =
+      "downColor";
+
+  }
+
+  if (currentPrice !== null) {
+
+    btcElement.textContent =
+      "Bitcoin: $" +
+      currentPrice.toLocaleString(
+        "en-US",
+        {
+          maximumFractionDigits: 2
+        }
+      );
+
+  }
+
+  if (roundStartPrice !== null) {
+
+    startPriceElement.textContent =
+      "Precio inicio de ronda: $" +
+      roundStartPrice.toLocaleString(
+        "en-US",
+        {
+          maximumFractionDigits: 2
+        }
+      );
+
+  }
+
+  const direction =
+    r.dist >= 0
+      ? "arriba"
+      : "abajo";
+
+  distanceElement.textContent =
+    "Movimiento: $" +
+    Math.abs(r.dist).toFixed(2) +
+    " " +
+    direction;
+
+}
+
+
+/* =========================================
+   ACTUALIZAR
+========================================= */
+
+async function analyze() {
+
+  statusElement.textContent =
+    "Actualizando...";
+
+  try {
+
+    const price =
+      await getBitcoinPrice();
+
+    currentPrice =
+      price;
+
+    checkNewRound(price);
+
+    calculateSignal();
+
+    saveMemory();
+
+    statusElement.textContent =
+      "BTC actualizado";
+
+  } catch (error) {
+
+    console.error(error);
+
+    statusElement.textContent =
+      "No se pudo leer BTC. Intenta actualizar.";
+
+  }
+
+}
+
+
+/* =========================================
+   VOZ
+========================================= */
+
+function speak() {
+
+  if (!voiceOn) {
+    return;
+  }
+
+  if (!lastResult) {
+    return;
+  }
+
+  if (
+    !("speechSynthesis" in window)
+  ) {
+
+    return;
+
+  }
+
+  const r =
+    lastResult;
+
+  const texto =
+    "Kalshi Bitcoin quince minutos. " +
+    r.signal +
+    ". Up " +
+    r.up +
+    " por ciento. Down " +
+    r.down +
+    " por ciento. Bitcoin está " +
+    Math.abs(
+      Math.round(r.dist)
+    ) +
+    " dólares " +
+    (
+      r.dist >= 0
+        ? "arriba"
+        : "abajo"
+    ) +
+    " del precio de inicio de la ronda.";
+
+  const voz =
+    new SpeechSynthesisUtterance(
+      texto
+    );
+
+  voz.lang =
+    "es-US";
+
+  voz.rate =
+    1;
+
+  voz.pitch =
+    1;
+
+  window.speechSynthesis.cancel();
+
+  window.speechSynthesis.speak(
+    voz
+  );
+
+}
+
+
+/* =========================================
+   BOTÓN VOZ
+========================================= */
+
+voiceButton.addEventListener(
+  "click",
+  function () {
+
+    voiceOn =
+      !voiceOn;
+
+    if (voiceOn) {
+
+      voiceButton.textContent =
+        "🔊 Voz activada cada minuto";
+
+      speak();
+
+    } else {
+
+      voiceButton.textContent =
+        "🔇 Activar lectura por voz";
+
+      window.speechSynthesis.cancel();
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   BOTÓN ACTUALIZAR
+========================================= */
+
+refreshButton.addEventListener(
+  "click",
+  function () {
+
+    analyze();
+
+  }
+);
+
+
+/* =========================================
+   INICIAR BOT
+========================================= */
+
+loadMemory();
+
+render();
+
+updateTimer();
+
+analyze();
+
+
+/* RELOJ CADA SEGUNDO */
+
+setInterval(
+  updateTimer,
+  1000
+);
+
+
+/* ACTUALIZAR BTC CADA 5 SEGUNDOS */
+
+setInterval(
+  analyze,
+  5000
+);
+
+
+/* VOZ CADA MINUTO */
+
+setInterval(
+  function () {
+
+    if (voiceOn) {
+
+      speak();
+
+    }
+
+  },
+  60000
+);
+
+</script>
+
+</body>
+</html>
